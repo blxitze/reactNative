@@ -1,5 +1,5 @@
 import React, { useState, useContext, useLayoutEffect } from 'react';
-import { View, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert, Text } from 'react-native';
 import { TextInput, Button, IconButton } from 'react-native-paper';
 import { NotesContext } from '../context/NotesContext';
 
@@ -7,14 +7,12 @@ const NoteDetailScreen = ({ route, navigation }) => {
   const { noteId } = route.params;
   const { notes, updateNote, deleteNote } = useContext(NotesContext);
   
-  // Find the note with the matching ID
   const note = notes.find(note => note.id === noteId);
   
   const [title, setTitle] = useState(note ? note.title : '');
   const [content, setContent] = useState(note ? note.content : '');
   const [isEditing, setIsEditing] = useState(false);
   
-  // Add a delete button to the header
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -26,7 +24,13 @@ const NoteDetailScreen = ({ route, navigation }) => {
           />
           <IconButton
             icon="delete"
-            onPress={handleDelete}
+            onPress={() => {
+              console.log('Force delete attempt');
+              console.log('Current notes:', notes);
+              console.log('Note ID to delete:', noteId);
+              deleteNote(noteId);
+              navigation.goBack();
+            }}
             color="#FF5252"
           />
         </View>
@@ -53,6 +57,7 @@ const NoteDetailScreen = ({ route, navigation }) => {
         {
           text: 'Delete',
           onPress: () => {
+            console.log('Deleting note with ID:', noteId);
             deleteNote(noteId);
             navigation.goBack();
           },
@@ -120,30 +125,68 @@ const NoteDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
-    backgroundColor: '#fff',
+    padding: 16,
+    backgroundColor: '#f9f9f9',
   },
   input: {
-    marginBottom: 15,
+    marginBottom: 18,
+    backgroundColor: '#fff',
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
   contentInput: {
-    marginBottom: 15,
-    minHeight: 200,
+    marginBottom: 18,
+    minHeight: 240,
+    backgroundColor: '#fff',
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: 16,
   },
   saveButton: {
     flex: 1,
-    marginLeft: 5,
-    backgroundColor: '#2196F3',
+    marginLeft: 8,
+    paddingVertical: 6,
+    backgroundColor: '#6200ee',
   },
   cancelButton: {
     flex: 1,
-    marginRight: 5,
+    marginRight: 8,
+    paddingVertical: 6,
+    borderColor: '#6200ee',
   },
+  forceDeleteButton: {
+    marginTop: 30,
+    backgroundColor: '#b00020', 
+    paddingVertical: 6,
+  },
+  deleteIcon: {
+    marginRight: 6,
+  },
+  addNoteTitleContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  addNoteTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#333',
+    marginVertical: 12,
+  },
+  addNoteSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 16,
+  }
 });
 
 export default NoteDetailScreen;

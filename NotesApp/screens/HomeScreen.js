@@ -56,35 +56,65 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f5f7fa',
+    paddingTop: 10,
   },
   list: {
-    padding: 10,
+    padding: 12,
   },
   card: {
-    marginBottom: 10,
+    marginBottom: 16,
+    marginHorizontal: 8,
+    borderRadius: 12,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   date: {
     fontSize: 12,
-    color: '#888',
-    marginTop: 5,
+    color: '#666',
+    marginTop: 6,
+    fontStyle: 'italic',
   },
   fab: {
     position: 'absolute',
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#6200ee',
+    elevation: 5,
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 30,
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#888',
+    textAlign: 'center',
+    lineHeight: 26,
   },
+  emptyImage: {
+    width: 120,
+    height: 120,
+    marginBottom: 20,
+    opacity: 0.7,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#2c2c2c',
+    marginBottom: 6,
+  },
+  preview: {
+    fontSize: 14,
+    color: '#666',
+    lineHeight: 20,
+  }
 });
 
 export default HomeScreen;

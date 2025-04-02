@@ -6,12 +6,10 @@ export const NotesContext = createContext();
 export const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
   
-  // Load notes from storage when app starts
   useEffect(() => {
     loadNotes();
   }, []);
   
-  // Save notes to AsyncStorage whenever they change
   useEffect(() => {
     saveNotes();
   }, [notes]);
@@ -29,7 +27,9 @@ export const NotesProvider = ({ children }) => {
   
   const saveNotes = async () => {
     try {
+      console.log('Saving notes to storage, count:', notes.length);
       await AsyncStorage.setItem('notes', JSON.stringify(notes));
+      console.log('Notes saved successfully');
     } catch (error) {
       console.error('Error saving notes:', error);
     }
@@ -62,7 +62,17 @@ export const NotesProvider = ({ children }) => {
   };
   
   const deleteNote = (id) => {
-    setNotes(notes.filter(note => note.id !== id));
+    console.log('Delete function called with id:', id);
+    console.log('Before deletion, notes count:', notes.length);
+    console.log('Notes IDs before deletion:', notes.map(n => n.id));
+    
+    const idToDelete = String(id);
+    const updatedNotes = notes.filter(note => String(note.id) !== idToDelete);
+    
+    console.log('After filter, notes count:', updatedNotes.length);
+    console.log('Notes IDs after deletion:', updatedNotes.map(n => n.id));
+    
+    setNotes(updatedNotes);
   };
   
   return (
